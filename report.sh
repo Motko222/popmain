@@ -17,7 +17,7 @@ errors=$(docker logs popmain | grep -c -E "rror|ERR")
 
 docker exec popmain ./pop status > /root/logs/pipemain-status
 docker exec popmain ./pop earnings > /root/logs/pipemain-earnings
-docker exec popmain curl -s http://localhost:8081/health/detailed | jq > /root/logs/pipemain-health
+#docker exec popmain curl -s http://localhost:8081/health/detailed | jq > /root/logs/pipemain-health
 
 status_node=$(cat /root/logs/pipemain-status | grep Status | head -1 | awk '{print $NF}')
 last=$(cat /root/logs/pipemain-status | grep Heartbeat | head -1 | awk '{print $4" "$5" "$6}')
