@@ -23,10 +23,10 @@ status_node=$(cat /root/logs/pipemain-status | grep Status | head -1 | awk '{pri
 status_health=$(cat /root/logs/pipemain-health | jq -r .status)
 unpaid=$(cat /root/logs/pipemain-earnings | grep Unpaid | head -1 | awk '{print $NF}')
 
-status="ok" && message=""
+status="ok" && message="unpaid=$unpaid"
 [ $errors -gt 500 ] && status="warning" && message="status=$status_node"
 [ "$docker_status" != "running" ] && status="error" && message="docker not running ($docker_status)"
-[ "$status_node" = "OFFLINE" ] && status="warning" && message="offline"
+[ "$status_node" != "ONLINE" || "$status_health" != "healthy" ] && status="warning" && message="status=$status_node health=$status_health"
 
 cat >$json << EOF
 {
@@ -46,7 +46,7 @@ cat >$json << EOF
         "message":"$message",
         "errors":$errors,
         "url":"",
-        "m1":"status=$status_node/$status_health unpaid=$unpaid",
+        "m1":"",
         "m2":"",
         "m3":""
         
