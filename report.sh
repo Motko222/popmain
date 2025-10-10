@@ -46,7 +46,7 @@ cat >$json << EOF
         "message":"$message",
         "errors":$errors,
         "url":"",
-        "m1":"",
+        "m1":"status=$status_node health=$status_health",
         "m2":"",
         "m3":""
         
