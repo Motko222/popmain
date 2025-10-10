@@ -23,7 +23,7 @@ status_node=$(cat /root/logs/pipemain-status | grep Status | head -1 | awk '{pri
 last=$(cat /root/logs/pipemain-status | grep Heartbeat | head -1 | awk '{print $4" "$5" "$6}')
 status_health=$(cat /root/logs/pipemain-health | jq -r .status)
 unpaid=$(cat /root/logs/pipemain-earnings | grep Unpaid | head -1 | awk '{print $NF}')
-unpaid=$(cat /root/logs/pipemain-earnings | grep Total | head -1 | awk '{print $NF}')
+total=$(cat /root/logs/pipemain-earnings | grep Total | head -1 | awk '{print $NF}')
 wallet=$(cat /root/logs/pipemain-earnings | grep Wallet | head -1 | awk '{print $NF}')
 
 status="ok" && message="total=$total unpaid=$unpaid"
