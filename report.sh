@@ -20,7 +20,7 @@ docker exec popmain ./pop earnings > /root/logs/pipemain-earnings
 #docker exec popmain curl -s http://localhost:8081/health/detailed | jq > /root/logs/pipemain-health
 
 status_node=$(cat /root/logs/pipemain-status | grep Status | head -1 | awk '{print $NF}')
-last=$(cat /root/logs/pipemain-status | grep Heartbeat | head -1 | awk '{print $4" "$5" "$6}')
+last=$(cat /root/logs/pipemain-status | grep Heartbeat | head -1 | awk '{print $4" "$5" "$6}' | sed 's/ minutes /m /' | sed 's/ hours /h /' | sed 's/ days /d /')
 status_health=$(cat /root/logs/pipemain-health | jq -r .status)
 unpaid=$(cat /root/logs/pipemain-earnings | grep Unpaid | head -1 | awk '{print $NF}')
 total=$(cat /root/logs/pipemain-earnings | grep Total | head -1 | awk '{print $NF}')
@@ -29,7 +29,7 @@ wallet=$(cat /root/logs/pipemain-earnings | grep Wallet | head -1 | awk '{print 
 status="ok" && message="total=$total unpaid=$unpaid"
 [ $errors -gt 500 ] && status="warning" && message="status=$status_node"
 [ "$docker_status" != "running" ] && status="error" && message="docker not running ($docker_status)"
-[ "$status_node" != "ONLINE" ] && status="warning" && message="status=$status_node health=$status_health"
+[ "$status_node" != "ONLINE" ] && status="warning" && message="status=$status_node"
 
 cat >$json << EOF
 {
@@ -49,7 +49,7 @@ cat >$json << EOF
         "message":"$message",
         "errors":$errors,
         "url":"",
-        "m1":"status=$status_node health=$status_health",
+        "m1":"status=$status_node",
         "m2":"last=$last",
         "m3":"",
         "wallet":"$wallet"
