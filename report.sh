@@ -20,7 +20,8 @@ docker exec popmain ./pop earnings > /root/logs/pipemain-earnings
 #docker exec popmain curl -s http://localhost:8081/health/detailed | jq > /root/logs/pipemain-health
 
 status_node=$(cat /root/logs/pipemain-status | grep Status | head -1 | awk '{print $NF}')
-last=$(cat /root/logs/pipemain-status | grep Heartbeat | head -1 | awk '{print $4" "$5" "$6}' | sed 's/ minutes /m /' | sed 's/ hours /h /' | sed 's/ days /d /')
+last=$(cat /root/logs/pipemain-status | grep Heartbeat | head -1 | awk '{print $4" "$5" "$6}' \
+ | sed 's/ seconds /s /' | sed 's/ minutes /m /' | sed 's/ hours /h /' | sed 's/ days /d /')
 status_health=$(cat /root/logs/pipemain-health | jq -r .status)
 unpaid=$(cat /root/logs/pipemain-earnings | grep Unpaid | head -1 | awk '{print $NF}')
 total=$(cat /root/logs/pipemain-earnings | grep Total | head -1 | awk '{print $NF}')
