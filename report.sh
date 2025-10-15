@@ -9,7 +9,7 @@ source $path/env
 version=$(docker exec popmain ./pop --version | awk '{print $NF}' | sed 's/\r//g')
 container=$(docker ps -a | grep "popmain" | awk '{print $NF}')
 docker_status=$(docker inspect $container | jq -r .[].State.Status)
-errors=$(docker logs popmain | grep -c -E "rror|ERR")
+errors=$(docker logs popmain | grep -c -E "ERROR")
 
 #json1=$(curl -sk https://localhost/health)
 #mem_hits=$(echo $json1 | jq -r .memory_cache.hits)/$(echo $json1 | jq -r .memory_cache.misses)
