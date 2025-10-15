@@ -28,7 +28,7 @@ total=$(cat /root/logs/pipemain-earnings | grep Total | head -1 | awk '{print $N
 wallet=$(cat /root/logs/pipemain-earnings | grep Wallet | head -1 | awk '{print $NF}')
 
 status="ok" && message="total=$total unpaid=$unpaid"
-[ $errors -gt 500 ] && status="warning" && message="too many errors"
+[ $errors -gt 500 ] && status="warning" && message="too many errors, heartbeat $last"
 [ "$docker_status" != "running" ] && status="error" && message="docker not running ($docker_status)"
 [ "$status_node" != "ONLINE" ] && status="warning" && message="status=$status_node"
 
@@ -50,8 +50,8 @@ cat >$json << EOF
         "message":"$message",
         "errors":$errors,
         "url":"",
-        "m1":"status=$status_node",
-        "m2":"last=$last",
+        "m1":"status=$status_node, heartbeat $last",
+        "m2":"",
         "m3":"",
         "wallet":"$wallet"
   }
