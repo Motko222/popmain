@@ -28,4 +28,4 @@ RUN chmod +x ./pop
 CMD ["./pop"]
 EOF
 
-docker build -t popnode .
+docker build -t popmain .
