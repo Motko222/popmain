@@ -27,7 +27,7 @@ unpaid=$(cat /root/logs/pipemain-earnings | grep Unpaid | head -1 | awk '{print 
 total=$(cat /root/logs/pipemain-earnings | grep Total | head -1 | awk '{print $NF}')
 wallet=$(cat /root/logs/pipemain-earnings | grep Wallet | head -1 | awk '{print $NF}')
 quality=$(cat /root/logs/pipemain-earnings | grep "Quality Multiplier" | head -1 | awk '{print $NF}')
-whitelist=$(cat /root/logs/pipemain-earnings | grep "Whitelist Bonus" | head -1 | awk '{print $4}')
+whitelist=$(cat /root/logs/pipemain-earnings | grep "Whitelist Bonus" | head -1 | awk '{print $5}')
 
 status="ok" && message="heartbeat $last"
 [ $errors -gt 500 ] && status="warning" && message="too many errors"
