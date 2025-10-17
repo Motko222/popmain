@@ -26,6 +26,8 @@ status_health=$(cat /root/logs/pipemain-health | jq -r .status)
 unpaid=$(cat /root/logs/pipemain-earnings | grep Unpaid | head -1 | awk '{print $NF}')
 total=$(cat /root/logs/pipemain-earnings | grep Total | head -1 | awk '{print $NF}')
 wallet=$(cat /root/logs/pipemain-earnings | grep Wallet | head -1 | awk '{print $NF}')
+quality=$(cat /root/logs/pipemain-earnings | grep "Quality Multiplier" | head -1 | awk '{print $NF}')
+whitelist=$(cat /root/logs/pipemain-earnings | grep "Whitelist Bonus" | head -1 | awk '{print $4}')
 
 status="ok" && message="heartbeat $last"
 [ $errors -gt 500 ] && status="warning" && message="too many errors"
@@ -52,7 +54,7 @@ cat >$json << EOF
         "url":"",
         "m1":"total=$total unpaid=$unpaid",
         "m2":"status=$status_node,last=$last",
-        "m3":"",
+        "m3":"quality=$quality whitelist=$whitelist",
         "wallet":"$wallet"
   }
 }
