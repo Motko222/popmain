@@ -29,7 +29,7 @@ wallet=$(cat /root/logs/pipemain-earnings | grep Wallet | head -1 | awk '{print 
 quality=$(cat /root/logs/pipemain-earnings | grep "Quality Multiplier" | head -1 | awk '{print $NF}')
 whitelist=$(cat /root/logs/pipemain-earnings | grep "Whitelist Bonus" | head -1 | awk '{print $5}')
 
-status="ok" && message="heartbeat $last"
+status="ok" && message="$last heartbeat"
 [ $errors -gt 500 ] && status="warning" && message="too many errors"
 [ "$docker_status" != "running" ] && status="error" && message="docker not running ($docker_status)"
 [ "$status_node" != "ONLINE" ] && status="warning" && message="not online"
@@ -53,7 +53,7 @@ cat >$json << EOF
         "errors":$errors,
         "url":"",
         "m1":"total=$total unpaid=$unpaid",
-        "m2":"status=$status_node,last=$last, mem=$MEMORY_CACHE_SIZE_MB, disk=$DISK_CACHE_SIZE_GB",
+        "m2":"status=$status_node last=$last mem=$MEMORY_CACHE_SIZE_MB disk=$DISK_CACHE_SIZE_GB",
         "m3":"quality=$quality whitelist=$whitelist",
         "wallet":"$wallet"
   }
