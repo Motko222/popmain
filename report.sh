@@ -53,7 +53,7 @@ cat >$json << EOF
         "errors":$errors,
         "url":"",
         "m1":"total=$total unpaid=$unpaid",
-        "m2":"status=$status_node,last=$last",
+        "m2":"status=$status_node,last=$last, mem=$MEMORY_CACHE_SIZE_MB, disk=$DISK_CACHE_SIZE_GB",
         "m3":"quality=$quality whitelist=$whitelist",
         "wallet":"$wallet"
   }
