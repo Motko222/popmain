@@ -31,8 +31,8 @@ whitelist=$(cat /root/logs/pipemain-earnings | grep "Whitelist Bonus" | head -1 
 
 status="ok" && message="$last heartbeat"
 [ $errors -gt 500 ] && status="warning" && message="too many errors"
-[ "$docker_status" != "running" ] && status="error" && message="docker not running ($docker_status)"
 [ "$status_node" != "ONLINE" ] && status="warning" && message="not online"
+[ "$docker_status" != "running" ] && status="error" && message="docker not running ($docker_status)"
 
 cat >$json << EOF
 {
