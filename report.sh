@@ -30,7 +30,7 @@ quality=$(cat /root/logs/pipemain-earnings | grep "Quality Multiplier" | head -1
 whitelist=$(cat /root/logs/pipemain-earnings | grep "Whitelist Bonus" | head -1 | awk '{print $5}')
 
 status="ok" && message="$last heartbeat"
-[ $errors -gt 500 ] && status="warning" && message="too many errors"
+[ $errors -gt 5 ] && status="warning" && message="$errors errors last hour"
 [ "$status_node" != "ONLINE" ] && status="warning" && message="not online"
 [ "$docker_status" != "running" ] && status="error" && message="docker not running ($docker_status)"
 
